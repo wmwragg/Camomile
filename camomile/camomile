@@ -1,0 +1,8 @@
+JETTY_PORT="-Djetty.port=$1"
+if [ $JETTY_PORT == "-Djetty.port=" ]
+then
+  JETTY_PORT=""
+fi
+
+cd server 
+java ${JETTY_PORT} -jar start.jar lib=../connections OPTIONS=plus

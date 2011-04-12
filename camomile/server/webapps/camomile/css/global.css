@@ -1,0 +1,38 @@
+BODY {
+  color : black; 
+  background-color : white;
+}
+
+HR { 
+  color : #259225;
+  background-color : #259225; 
+}
+
+TEXTAREA {
+  width:100%;
+}
+
+/* set the default text size for the webapp here. */
+/* 100% will be the text size set by the browser. */
+/* 200% will be twice the text size set by the browser. */
+BODY, HR, H1, H3, H4, TD, INPUT, SELECT, TEXTAREA { 
+  font-family : sans-serif;
+  font-size : 100%;
+}
+
+H1, H3, H4 {
+  margin : 0.2ex;
+}
+
+H2 {
+  font-size : 150%;
+  margin : 0.2ex;
+}
+
+INPUT, SELECT, TEXTAREA { 
+  font-size : 100%;
+}
+
+.SUBSCRIPT {
+  font-size : 80%;
+}

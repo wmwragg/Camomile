@@ -40,7 +40,7 @@ e.g. for MySQL test database
 		"test" : {
 			"driver" : "com.mysql.jdbc.Driver",
 			"url" : "jdbc:mysql://localhost:3306/test",
-			"user" : "root‚Äù,
+			"user" : "root",
 			"password" : "",
 			"allow sql" : "true"
 		}

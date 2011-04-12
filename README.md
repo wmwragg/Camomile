@@ -60,6 +60,5 @@ There will be a full noSQL RESTful Relational Mapping (RRM) API, which I have ye
 
 * Camomile is in early alpha stage. It has the RESTful SQL interface completed, but needs full testing and tweaking, especially the database types to JSON conversions.
 * It comes in one directory, but this is just essentially a Jetty install, with a wrapper.
-* The configuration is via the web.xml and jetty-web.xml files hidden in the server/ directory.
 * There is no RRM yet, I still have to work out what the API for this is going to look like.
 * There is no auto compile at the moment, this is all manual until I work out how to use ANT/Mavern to do it.  

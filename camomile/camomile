@@ -1,8 +1,11 @@
+cd bin
+awk -f json.awk -f connections.awk
+
 JETTY_PORT="-Djetty.port=$1"
 if [ $JETTY_PORT == "-Djetty.port=" ]
 then
   JETTY_PORT=""
-fi
+fi 
 
-cd server 
+cd ../server 
 java ${JETTY_PORT} -jar start.jar lib=../connections OPTIONS=plus

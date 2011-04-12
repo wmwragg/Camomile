@@ -3,9 +3,21 @@
 <Configure class="org.eclipse.jetty.webapp.WebAppContext">
     <Set name="contextPath">/</Set>
 
-    <New id="mysql" class="org.eclipse.jetty.plus.jndi.Resource">
+    <New id="test2" class="org.eclipse.jetty.plus.jndi.Resource">
         <Arg></Arg>
-        <Arg>jdbc/mysql</Arg>
+        <Arg>jdbc/test2</Arg>
+        <Arg>
+            <New class="com.mchange.v2.c3p0.ComboPooledDataSource">
+                <Set name="driverClass">com.mysql.jdbc.Driver</Set>
+                <Set name="jdbcUrl">jdbc:mysql://localhost:3306/test</Set>
+                <Set name="user">root</Set>
+                <Set name="password"></Set>
+            </New>
+        </Arg>
+    </New>
+    <New id="test" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/test</Arg>
         <Arg>
             <New class="com.mchange.v2.c3p0.ComboPooledDataSource">
                 <Set name="driverClass">com.mysql.jdbc.Driver</Set>
@@ -16,4 +28,3 @@
         </Arg>
     </New>
 </Configure>
-

@@ -65,6 +65,20 @@ function JSONToWebappConfig(  _allLines, _jsonData, _connections, _con, _item, _
 
                 #print _con "[\"allow sql\"] = " _jsonData[_con SUBSEP "allow sql"]
 
+                print "    <context-param>" > _webXml
+                print "        <param-name>" _con ":allow sql</param-name>" > _webXml
+                print "        <param-value>" _jsonData[_con SUBSEP "allow sql"] "</param-value>" > _webXml
+                print "        <description>" > _webXml
+                print "            Allow Raw SQL (true or false)." > _webXml
+                print "        </description>" > _webXml
+                print "    </context-param>" > _webXml
+            }
+
+            print "" > _webXml
+
+            for (_item in _connections) {
+                _con = _connections[_item]
+
                 print "    <resource-ref>" > _webXml
                 print "        <description>Camomile DataSource Resource</description>" > _webXml
                 print "        <res-ref-name>jdbc/" _con "</res-ref-name>" > _webXml

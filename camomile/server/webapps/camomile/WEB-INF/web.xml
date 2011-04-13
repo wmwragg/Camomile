@@ -24,6 +24,21 @@
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 
+    <context-param>
+        <param-name>test2:allow sql</param-name>
+        <param-value>false</param-value>
+        <description>
+            Allow Raw SQL (true or false).
+        </description>
+    </context-param>
+    <context-param>
+        <param-name>test:allow sql</param-name>
+        <param-value>true</param-value>
+        <description>
+            Allow Raw SQL (true or false).
+        </description>
+    </context-param>
+
     <resource-ref>
         <description>Camomile DataSource Resource</description>
         <res-ref-name>jdbc/test2</res-ref-name>

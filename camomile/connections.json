@@ -11,7 +11,7 @@
 		"url" : "jdbc:mysql://localhost:3306/test",
 		"user" : "root",
 		"password" : "",
-		"allow sql" : "true"
+		"allow sql" : "false"
 	}
 }
 

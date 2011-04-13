@@ -1,8 +1,38 @@
+#!/bin/bash
+# #############################################################################
+#
+# Start the Camomile server
+#
+# Use like:
+#
+# camomile [port]
+#
+# E.g.
+#
+# camomile
+# camomile 8181
+#
+# #############################################################################
+
+OS="Linux"
+case "`uname`" in
+Darwin*) OS="OSX";;
+Linux*) OS="LINUX";;
+esac
+
 cd bin
-awk -f json.awk -f connections.awk
+if [ "$OS" == "OSX" ]
+then
+  awk -f json.awk -f connections.awk
+elif [ "$OS" == LINUX ]
+then
+  LC_ALL=C gawk -f json.awk -f connections.awk
+else
+  LC_ALL=C gawk -f json.awk -f connections.awk
+fi
 
 JETTY_PORT="-Djetty.port=$1"
-if [ $JETTY_PORT == "-Djetty.port=" ]
+if [ "$JETTY_PORT" == "-Djetty.port=" ]
 then
   JETTY_PORT=""
 fi 

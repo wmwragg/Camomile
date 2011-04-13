@@ -1,7 +1,20 @@
-function JSONToWebappConfig(  _allLines, _jsonData, _connections, _con, _item, _jettyWebXml, _webXml) {
+function JSONToWebappConfig(  _allLines, _jsonData, _connections, _con, _item, _jettyWebXml, _webXml, _camomileJettyWebXml, _camomileWebXml, _connectionsJson) {
+    if (OS == "WINDOWS") {
+        _connectionsJson = "..\\connections.json"
+        _jettyWebXml = "..\\server\\webapps\\camomile\\WEB-INF\\jetty-web.xml"
+        _camomileJettyWebXml = "..\\server\\webapps\\camomile\\WEB-INF\\camomile-jetty-web.xml"
+        _webXml = "..\\server\\webapps\\camomile\\WEB-INF\\web.xml"
+        _camomileWebXml = "..\\server\\webapps\\camomile\\WEB-INF\\camomile-web.xml"
+    } else {
+        _connectionsJson = "../connections.json"
+        _jettyWebXml = "../server/webapps/camomile/WEB-INF/jetty-web.xml"
+        _camomileJettyWebXml = "../server/webapps/camomile/WEB-INF/camomile-jetty-web.xml"
+        _webXml = "../server/webapps/camomile/WEB-INF/web.xml"
+        _camomileWebXml = "../server/webapps/camomile/WEB-INF/camomile-web.xml"
+    }
+
     # Read JSON file
-    while ((getline line < "../connections.json") > 0)
-    {
+    while ((getline line < _connectionsJson) > 0) {
         _allLines = (_allLines == "" ? "" : (_allLines "\n")) line
     }
 
@@ -14,8 +27,7 @@ function JSONToWebappConfig(  _allLines, _jsonData, _connections, _con, _item, _
     JSONObjectMembers(_jsonData, "", _connections)
 
     # Read camomile-jetty-web.xml and write jetty-web.xml file
-    _jettyWebXml = "../server/webapps/camomile/WEB-INF/jetty-web.xml"
-    while ((getline line < "../server/webapps/camomile/WEB-INF/camomile-jetty-web.xml") > 0) {
+    while ((getline line < _camomileJettyWebXml) > 0) {
         if (line ~ /<\/Configure>/) {
             for (_item in _connections) {
                 _con = _connections[_item]
@@ -46,8 +58,7 @@ function JSONToWebappConfig(  _allLines, _jsonData, _connections, _con, _item, _
     close(_jettyWebXml)
 
     # Read camomile-web.xml and write web.xml file
-    _webXml = "../server/webapps/camomile/WEB-INF/web.xml"
-    while ((getline line < "../server/webapps/camomile/WEB-INF/camomile-web.xml") > 0) {
+    while ((getline line < _camomileWebXml) > 0) {
         if (line ~ /<\/web-app>/) {
             for (_item in _connections) {
                 _con = _connections[_item]

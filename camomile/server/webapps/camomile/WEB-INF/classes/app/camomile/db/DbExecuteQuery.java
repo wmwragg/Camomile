@@ -8,8 +8,6 @@ import java.sql.*;
 import java.util.*;
 import app.camomile.exceptions.*;
 
-import org.joda.time.*;
-
 // Immutable query class
 public final class DbExecuteQuery {
   private final JSONObject jobj = new JSONObject();

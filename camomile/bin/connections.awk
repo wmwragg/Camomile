@@ -1,4 +1,17 @@
-function JSONToWebappConfig(  _allLines, _jsonData, _connections, _con, _item, _jettyWebXml, _webXml, _camomileJettyWebXml, _camomileWebXml, _connectionsJson) {
+function errorExit(message) {
+  print "#####"
+  print "ERROR: " message
+  print "#####"
+  exit 1
+}
+
+function errorMessage(message) {
+  print "#######"
+  print "MESSAGE: " message
+  print "#######"
+}
+
+function JSONToWebappConfig(  _allLines, _jsonData, _connections, _con, _item, _driver, _url, _user, _password, _noUser, _noPassword, _allowSql, _jettyWebXml, _webXml, _camomileJettyWebXml, _camomileWebXml, _connectionsJson) {
     if (OS == "WINDOWS") {
         _connectionsJson = "..\\connections.json"
         _jettyWebXml = "..\\server\\webapps\\camomile\\WEB-INF\\jetty-web.xml"
@@ -26,26 +39,60 @@ function JSONToWebappConfig(  _allLines, _jsonData, _connections, _con, _item, _
     # Process parsed JSON
     JSONObjectMembers(_jsonData, "", _connections)
 
+    _noUser = "false"
+    _noPassword = "false"
     # Read camomile-jetty-web.xml and write jetty-web.xml file
     while ((getline line < _camomileJettyWebXml) > 0) {
         if (line ~ /<\/Configure>/) {
             for (_item in _connections) {
                 _con = _connections[_item]
 
-                #print _con ".driver = "_jsonData[_con SUBSEP "driver"]
-                #print _con ".url = " _jsonData[_con SUBSEP "url"]
-                #print _con ".user = " _jsonData[_con SUBSEP "user"]
-                #print _con ".password = " _jsonData[_con SUBSEP "password"]
+                if ((_con SUBSEP "driver") in _jsonData) {
+                  _driver = _jsonData[_con SUBSEP "driver"]
+                } else {
+                  errorExit("No \"driver\" element specified in the connections.json file.")
+                }
+
+                if ((_con SUBSEP "url") in _jsonData) {
+                  _url = _jsonData[_con SUBSEP "url"]
+                } else {
+                  errorExit("No \"url\" element specified in the connections.json file.")
+                }
+
+                if ((_con SUBSEP "user") in _jsonData) {
+                  _user = _jsonData[_con SUBSEP "user"]
+                } else {
+                  _noUser = "true"
+                  errorMessage("No \"user\" element specified in the connections.json file, this is fine as long as they are specified in the \"url\".")
+                }
+
+                if ((_con SUBSEP "password") in _jsonData) {
+                  _password = _jsonData[_con SUBSEP "passowrd"]
+                  if (_noUser == "true") {
+                    errorExit("No \"user\" element specified in the connections.json file, but a \"password\" element has been specified.")
+                  }
+                } else {
+                  _noPassword = "true"
+                  if (_noUser == "true") {
+                    errorMessage("No \"password\" element specified in the connections.json file, this is fine as long as they are specified in the \"url\".")
+                  } else {
+                    errorExit("No \"password\" element specified in the connections.json file, but a \"user\" element has been specified, if you want a blank password just use a blank string \"\" for the value of the \"password\" element.")
+                  }
+                }
 
                 print "    <New id=\"" _con "\" class=\"org.eclipse.jetty.plus.jndi.Resource\">" > _jettyWebXml
                 print "        <Arg></Arg>" > _jettyWebXml
                 print "        <Arg>jdbc/" _con "</Arg>" > _jettyWebXml
                 print "        <Arg>" > _jettyWebXml
                 print "            <New class=\"com.mchange.v2.c3p0.ComboPooledDataSource\">" > _jettyWebXml
-                print "                <Set name=\"driverClass\">" _jsonData[_con SUBSEP "driver"] "</Set>" > _jettyWebXml
-                print "                <Set name=\"jdbcUrl\">" _jsonData[_con SUBSEP "url"] "</Set>" > _jettyWebXml
-                print "                <Set name=\"user\">" _jsonData[_con SUBSEP "user"] "</Set>" > _jettyWebXml
-                print "                <Set name=\"password\">" _jsonData[_con SUBSEP "password"] "</Set>" > _jettyWebXml
+                print "                <Set name=\"driverClass\">" _driver "</Set>" > _jettyWebXml
+                print "                <Set name=\"jdbcUrl\">" _url "</Set>" > _jettyWebXml
+                if (_noUser == "false") {
+                  print "                <Set name=\"user\">" _user "</Set>" > _jettyWebXml
+                }
+                if (_noPassword == "false") {
+                  print "                <Set name=\"password\">" _password "</Set>" > _jettyWebXml
+                }
                 print "            </New>" > _jettyWebXml
                 print "        </Arg>" > _jettyWebXml
                 print "    </New>" > _jettyWebXml
@@ -63,11 +110,14 @@ function JSONToWebappConfig(  _allLines, _jsonData, _connections, _con, _item, _
             for (_item in _connections) {
                 _con = _connections[_item]
 
-                #print _con "[\"allow sql\"] = " _jsonData[_con SUBSEP "allow sql"]
+                _allowSql = _jsonData[_con SUBSEP "allow sql"]
+                if (_allowSql != "true" && _allowSql != "false") {
+                  _allowSql = "false"
+                }
 
                 print "    <context-param>" > _webXml
                 print "        <param-name>" _con ":allow sql</param-name>" > _webXml
-                print "        <param-value>" _jsonData[_con SUBSEP "allow sql"] "</param-value>" > _webXml
+                print "        <param-value>" _allowSql "</param-value>" > _webXml
                 print "        <description>" > _webXml
                 print "            Allow Raw SQL (true or false)." > _webXml
                 print "        </description>" > _webXml

@@ -1,4 +1,4 @@
-package app.camomile.rest;
+package app.camomile.sql;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;
@@ -11,15 +11,17 @@ import javax.naming.*;
 import javax.sql.*;
 import java.sql.*;
 import app.camomile.db.*;
-import app.camomile.rest.exceptions.*;
+import app.camomile.exceptions.*;
 
-@Path("/{connection}/_sql")
+@Path("/{connection}")
+@Consumes("application/json")
+@Produces("application/json")
 public class CamomileSqlResource {
+  @Context ServletContext context;
+  @PathParam("connection") String connection;
 
   @GET
-  @Consumes("application/json")
-  @Produces("application/json")
-  public JSONObject getAllMessage(JSONObject jsonSql, @PathParam("connection") String connection, @Context ServletContext context) {
+  public JSONObject getAllMessage(JSONObject jsonSql) {
     String error;
     JSONObject jobj = null;
     String allowSQL = context.getInitParameter(connection + ":allow sql");
@@ -49,9 +51,7 @@ public class CamomileSqlResource {
 
   @GET
   @Path("/{limit}")
-  @Consumes("application/json")
-  @Produces("application/json")
-  public JSONObject getLimitMessage(JSONObject jsonSql, @PathParam("connection") String connection, @PathParam("limit") int limit, @Context ServletContext context) {
+  public JSONObject getLimitMessage(JSONObject jsonSql, @PathParam("limit") int limit) {
     String error;
     JSONObject jobj = null;
     String allowSQL = context.getInitParameter(connection + ":allow sql");
@@ -80,9 +80,7 @@ public class CamomileSqlResource {
   }
 
   @POST
-  @Consumes("application/json")
-  @Produces("application/json")
-  public JSONObject postMessage(JSONObject jsonSql, @PathParam("connection") String connection, @Context ServletContext context) {
+  public JSONObject postMessage(JSONObject jsonSql) {
     String error;
     JSONObject jobj = null;
     String allowSQL = context.getInitParameter(connection + ":allow sql");

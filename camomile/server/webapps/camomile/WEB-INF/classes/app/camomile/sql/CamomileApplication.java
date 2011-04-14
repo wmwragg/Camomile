@@ -1,4 +1,4 @@
-package app.camomile.rest;
+package app.camomile.sql;
 
 import java.util.HashSet;
 import java.util.Set;

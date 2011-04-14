@@ -11,17 +11,17 @@
     </welcome-file-list> 
 
     <servlet>
-        <servlet-name>CamomileApp</servlet-name>
+        <servlet-name>CamomileSqlApp</servlet-name>
         <servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>app.camomile.rest.CamomileApplication</param-value>
+            <param-value>app.camomile.sql.CamomileApplication</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CamomileApp</servlet-name>
-        <url-pattern>/rest/*</url-pattern>
+        <servlet-name>CamomileSqlApp</servlet-name>
+        <url-pattern>/sql/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

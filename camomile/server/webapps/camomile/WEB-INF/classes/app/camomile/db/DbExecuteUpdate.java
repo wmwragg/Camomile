@@ -6,7 +6,7 @@ import org.json.*;
 import javax.sql.*;
 import java.sql.*;
 import java.util.*;
-import app.camomile.rest.exceptions.*;
+import app.camomile.exceptions.*;
 
 // Immutable query class
 public final class DbExecuteUpdate {

@@ -1,4 +1,4 @@
-package app.camomile.rest.exceptions;
+package app.camomile.exceptions;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;

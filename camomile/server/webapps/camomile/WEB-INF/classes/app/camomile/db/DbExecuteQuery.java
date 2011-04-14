@@ -68,28 +68,7 @@ public final class DbExecuteQuery {
           // Get the right java types for the database types
           // Note: More need to be added
           int type = rsmd.getColumnType(num);
-          if (type == Types.DATE || type == Types.TIME || type == Types.TIMESTAMP) {
-            java.util.Date dateTime = null;
-
-            if (type == Types.DATE) {
-              dateTime = (java.util.Date) rs.getDate(num);
-            } else if (type == Types.TIME) {
-              dateTime = (java.util.Date) rs.getTime(num);
-            } else if (type == Types.TIMESTAMP) {
-              dateTime = (java.util.Date) rs.getTimestamp(num);
-            }
-
-            if (dateTime != null) {
-              long utcTimestamp = dateTime.getTime();
-              long offset = (new DateTime(dateTime)).getZone().toTimeZone().getRawOffset();
-              ArrayList<Object> listTime = new ArrayList<Object>();
-              listTime.add(utcTimestamp);
-              listTime.add(offset);
-              listRecord.add(listTime);
-            } else {
-              listRecord.add(dateTime);
-            }
-          } else if (type == Types.TINYINT || type == Types.SMALLINT || type == Types.INTEGER) {
+          if (type == Types.TINYINT || type == Types.SMALLINT || type == Types.INTEGER) {
             listRecord.add(rs.getInt(num));
           } else if (type == Types.BIGINT) {
             listRecord.add(rs.getLong(num));

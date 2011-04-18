@@ -58,7 +58,6 @@ public final class DbExecuteQuery {
       }
 
       ArrayList<ArrayList> list = new ArrayList<ArrayList>();
-      boolean isLast = false;
       int count = 0;
       while (rs.next()) {
         ArrayList<Object> listRecord = new ArrayList<Object>();
@@ -78,8 +77,6 @@ public final class DbExecuteQuery {
         }
         list.add(listRecord);
 
-        isLast = rs.isLast();
-
         // If there is a limit > 0 then stop when the limit is reached
         count++;
         if (count == limit) {
@@ -94,7 +91,7 @@ public final class DbExecuteQuery {
       } else {
         jobj.put("Limit", limit);
       }
-      jobj.put("More Rows", !isLast);
+      jobj.put("More Rows", rs.next());
       jobj.put("Columns", listColumns);
       jobj.put("Types", listTypes);
       jobj.put("java.sql.Types", listJavaTypes);

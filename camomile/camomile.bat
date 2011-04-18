@@ -16,12 +16,4 @@ rem
 rem ###########################################################################
 
 cd bin
-call awk95 -v OS="WINDOWS" -f json.awk -f connections.awk
-
-set JETTY_PORT=-Djetty.port=%1
-if not "%JETTY_PORT%" == "-Djetty.port=" goto gotPort
-set JETTY_PORT=""
-:gotPort
-
-cd ..\server 
-call java %JETTY_PORT% -jar start.jar lib=..\connections OPTIONS=plus
+call awk95 -v OS="WINDOWS" -v PORT=%1 -f json.awk -f camomile.awk

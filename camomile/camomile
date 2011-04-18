@@ -14,7 +14,7 @@
 #
 # #############################################################################
 
-OS="Linux"
+OS=""
 case "`uname`" in
 Darwin*) OS="OSX";;
 Linux*) OS="LINUX";;
@@ -23,19 +23,10 @@ esac
 cd bin
 if [ "$OS" == "OSX" ]
 then
-  awk -f json.awk -f connections.awk
-elif [ "$OS" == LINUX ]
+  awk -v PORT=$1 -f json.awk -f camomile.awk
+elif [ "$OS" == "LINUX" ]
 then
-  LC_ALL=C gawk -f json.awk -f connections.awk
+  LC_ALL=C gawk -v PORT=$1 -f json.awk -f camomile.awk
 else
-  LC_ALL=C gawk -f json.awk -f connections.awk
+  LC_ALL=C gawk -v PORT=$1 -f json.awk -f camomile.awk
 fi
-
-JETTY_PORT="-Djetty.port=$1"
-if [ "$JETTY_PORT" == "-Djetty.port=" ]
-then
-  JETTY_PORT=""
-fi 
-
-cd ../server 
-java ${JETTY_PORT} -jar start.jar lib=../connections OPTIONS=plus

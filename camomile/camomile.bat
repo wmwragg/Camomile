@@ -16,4 +16,4 @@ rem
 rem ###########################################################################
 
 cd bin
-call awk95 -v OS="WINDOWS" -v PORT=%1 -f json.awk -f camomile.awk
+awk95 -v OS="WINDOWS" -v PORT=%1 -f json.awk -f camomile.awk

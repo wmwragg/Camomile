@@ -138,20 +138,21 @@ function JSONToWebappConfig(  _allLines, _jsonData, _connections, _con, _item, _
 
 function startJettyServer(  _cmd) {
   if (PORT != "") {
-    _cmd = "cd .." S "server\n java -Djetty.port=" PORT " -jar start.jar lib=.." S "connectors OPTIONS=plus"
+    _cmd = "cd .." S "server " CS " java -Djetty.port=" PORT " -jar start.jar lib=.." S "connectors OPTIONS=plus"
   } else {
-    _cmd = "cd .." S "server\n java -jar start.jar lib=.." S "connectors OPTIONS=plus"
+    _cmd = "cd .." S "server " CS " java -jar start.jar lib=.." S "connectors OPTIONS=plus"
   }
 
-  
   system(_cmd)
 }
 
 BEGIN {
   if (OS == "WINDOWS") {
     S = "\\"
+    CS = "&"
   } else {  
     S = "/"
+    CS = ";"
   }
 
   JSONToWebappConfig()

@@ -52,15 +52,15 @@ Then just start up Camomile using the script:
 
 This will start camomile on port 8080. You can then access the database via the RESTful camomile interface e.g. via curl bring back the top 20 rows from the info table:
 
-	curl -X GET -H "Content-Type: application/json" http://localhost:8080/sql/test/20 -d'{"SQL":"select * from info"}'
+    curl -X GET -H "Content-Type: application/json" http://localhost:8080/sql/test/20 -d'{"SQL":"select * from info"}'
 
 Queries (SQL select statements) are done through GET while updates (SQL none select statements) are done through POST:
 
-	curl -X POST -H "Content-Type: application/json" http://localhost:8080/sql/test -d"{\"SQL\":\"insert into info \(name\) values \('info text'\)\"}"
+    curl -X POST -H "Content-Type: application/json" http://localhost:8080/sql/test -d"{\"SQL\":\"insert into info \(name\) values \('info text'\)\"}"
 
 The default style for the return JSON will be compact, if you want pretty print JSON returned, use the query parameter "json=pretty" e.g.
 
-  curl -X GET -H "Content-Type: application/json" "http://localhost:8080/sql/test/20?json=pretty" -d'{"SQL":"select * from info"}'
+    curl -X GET -H "Content-Type: application/json" "http://localhost:8080/sql/test/20?json=pretty" -d'{"SQL":"select * from info"}'
 
 There will be a full noSQL RESTful Relational Mapping (RRM) API, which I have yet to finalise, but it will be something like ActiveResources API.
 

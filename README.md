@@ -70,3 +70,12 @@ There will be a full noSQL RESTful Relational Mapping (RRM) API, which I have ye
 * It comes in one directory, but this is just essentially a Jetty install, with a wrapper.
 * There is no RRM yet, I still have to work out what the API for this is going to look like.
 * There is no auto compile at the moment, this is all manual until I work out how to use ANT/Mavern to do it. I have compiled the code in the repository already, so you only have to download Camomile and run it, no compiling needed if you just want to use it. If you are on a Unix style system e.g. Mac OSX or Linux, then you can use the compile-cammomile script, to compile camomile.
+
+## Thanks to projects
+
+I use the following projects in Camomile, and I just want to thank them for all their hard work in making my life simpler and easier:
+
+* Jetty http://jetty.codehaus.org/jetty/
+* Apache Wink http://incubator.apache.org/wink/
+* AWK http://www.cs.bell-labs.com/cm/cs/awkbook/index.html
+* JSON for Awk http://sourceforge.net/projects/jsonforawk/

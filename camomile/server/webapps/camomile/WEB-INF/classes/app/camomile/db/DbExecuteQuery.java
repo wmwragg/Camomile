@@ -85,17 +85,17 @@ public final class DbExecuteQuery {
       }
 
       // Create the return JSON
-      jobj.put("Count", count);
+      jobj.put("count", count);
       if (limit == 0) {
-        jobj.put("Limit", "_all");
+        jobj.put("limit", "_all");
       } else {
-        jobj.put("Limit", limit);
+        jobj.put("limit", limit);
       }
-      jobj.put("More Rows", rs.next());
-      jobj.put("Columns", listColumns);
-      jobj.put("Types", listTypes);
-      jobj.put("java.sql.Types", listJavaTypes);
-      jobj.put("Rows", list);
+      jobj.put("more rows", rs.next());
+      jobj.put("columns", listColumns);
+      jobj.put("types", listTypes);
+      //jobj.put("java.sql.Types", listJavaTypes);
+      jobj.put("rows", list);
 
     } catch(SQLException e){
       error = "SQLException: Could not exexcute the query - " + e;

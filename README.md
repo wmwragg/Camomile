@@ -17,12 +17,12 @@ The idea is to have a simple directory which you just copy to your hard drive, n
 
 	camomile/
 		camomile
-  		camomile.bat
+  	camomile.bat
 		connections.json
-		connections/
+		connectors/
 		server/
 
-You put the JDBC jars in the connections/ directory, and add the connection configuration to the connections.json file using JSON syntax:
+You put the JDBC jars in the connectors/ directory, and add the connection configuration to the connections.json file using JSON syntax:
 
 	{
 		"<connection name>" : {

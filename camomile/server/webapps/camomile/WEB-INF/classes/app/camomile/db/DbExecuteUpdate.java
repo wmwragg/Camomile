@@ -59,9 +59,9 @@ public final class DbExecuteUpdate {
             listRecord.add(rs.getString(num));
           }
         }
-        jobj.put("Keys", listRecord);
+        jobj.put("keys", listRecord);
       }
-      jobj.put("Count", count);
+      jobj.put("count", count);
 
     } catch(SQLException e){
       error = "SQLException: Could not exexcute the query - " + e;

@@ -1,0 +1,72 @@
+# Use like:
+#
+# ./compile-camomile
+#
+# and this will compile camomile.
+#
+
+# Make sure the base is the full path 
+BASE=./camomile
+
+SERVER_HOME=$BASE/server
+WEBAPP=$SERVER_HOME/webapps/camomile
+
+echo "Creating CLASSPATH..."
+
+CLASSPATH=.
+
+# Add on extra jar files to CLASSPATH
+# External
+for i in "$BASE"/connectors/*.jar
+do
+  CLASSPATH="$CLASSPATH":"$i"
+done
+
+# Server
+for i in "$SERVER_HOME"/lib/*.jar
+do
+  CLASSPATH="$CLASSPATH":"$i"
+done
+for i in "$SERVER_HOME"/lib/annotations/*.jar
+do
+  CLASSPATH="$CLASSPATH":"$i"
+done
+#for i in "$SERVER_HOME"/lib/ext/*.jar
+#do
+#  CLASSPATH="$CLASSPATH":"$i"
+#done
+for i in "$SERVER_HOME"/lib/jndi/*.jar
+do
+  CLASSPATH="$CLASSPATH":"$i"
+done
+for i in "$SERVER_HOME"/lib/jsp/*.jar
+do
+  CLASSPATH="$CLASSPATH":"$i"
+done
+for i in "$SERVER_HOME"/lib/jta/*.jar
+do
+  CLASSPATH="$CLASSPATH":"$i"
+done
+
+# Webapp
+for i in "$WEBAPP"/WEB-INF/lib/*.jar
+do
+  CLASSPATH="$CLASSPATH":"$i"
+done
+CLASSPATH="$CLASSPATH":"$WEBAPP"/WEB-INF/classes
+
+# These are the additions to the CLASSPATH required to compile the packages.
+CLASSPATH="$CLASSPATH":"$WEBAPP"/WEB-INF/classes/app/camomile/rest
+CLASSPATH="$CLASSPATH":"$WEBAPP"/WEB-INF/classes/app/camomile/rest/exceptions
+CLASSPATH="$CLASSPATH":"$WEBAPP"/WEB-INF/classes/app/camomile/db
+
+export CLASSPATH
+
+echo "CLASSPATH created."
+
+# Do the compile
+echo "Compiling Camomile..."
+
+find $WEBAPP/WEB-INF/classes -name "*.java" | xargs javac
+
+echo "Camomile compiled."

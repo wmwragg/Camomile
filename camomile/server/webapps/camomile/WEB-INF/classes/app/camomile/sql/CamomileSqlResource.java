@@ -19,9 +19,10 @@ import app.camomile.exceptions.*;
 public class CamomileSqlResource {
   @Context ServletContext context;
   @PathParam("connection") String connection;
+  @DefaultValue("compact") @QueryParam("json") String jsonStyle;
 
   @GET
-  public JSONObject getAllMessage(JSONObject jsonSql) {
+  public String getAllMessage(JSONObject jsonSql) {
     String error;
     JSONObject jobj = null;
     String allowSQL = context.getInitParameter(connection + ":allow sql");
@@ -46,12 +47,23 @@ public class CamomileSqlResource {
         throw new CamomileForbiddenException(error);
     }
 
-    return jobj;
+    String returnJson = "";
+    try {
+      if (jsonStyle.equals("compact")) {
+        returnJson = jobj.toString();
+      } else {
+        returnJson = jobj.toString(4);
+      }
+    } catch(JSONException e) {
+      error = "JSONException: Badly formed JSON result string - " + e;      
+      throw new CamomileBadRequestException(error);
+    }
+    return returnJson;
   }
 
   @GET
   @Path("/{limit}")
-  public JSONObject getLimitMessage(JSONObject jsonSql, @PathParam("limit") int limit) {
+  public String getLimitMessage(JSONObject jsonSql, @PathParam("limit") int limit) {
     String error;
     JSONObject jobj = null;
     String allowSQL = context.getInitParameter(connection + ":allow sql");
@@ -76,11 +88,22 @@ public class CamomileSqlResource {
         throw new CamomileForbiddenException(error);
     }
 
-    return jobj;
+    String returnJson = "";
+    try {
+      if (jsonStyle.equals("compact")) {
+        returnJson = jobj.toString();
+      } else {
+        returnJson = jobj.toString(4);
+      }
+    } catch(JSONException e) {
+      error = "JSONException: Badly formed JSON result string - " + e;      
+      throw new CamomileBadRequestException(error);
+    }
+    return returnJson;
   }
 
   @POST
-  public JSONObject postMessage(JSONObject jsonSql) {
+  public String postMessage(JSONObject jsonSql) {
     String error;
     JSONObject jobj = null;
     String allowSQL = context.getInitParameter(connection + ":allow sql");
@@ -105,7 +128,18 @@ public class CamomileSqlResource {
         throw new CamomileForbiddenException(error);
     }
 
-    return jobj;
+    String returnJson = "";
+    try {
+      if (jsonStyle.equals("compact")) {
+        returnJson = jobj.toString();
+      } else {
+        returnJson = jobj.toString(4);
+      }
+    } catch(JSONException e) {
+      error = "JSONException: Badly formed JSON result string - " + e;      
+      throw new CamomileBadRequestException(error);
+    }
+    return returnJson;
   }
 }
 

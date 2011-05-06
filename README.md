@@ -58,6 +58,10 @@ Queries (SQL select statements) are done through GET while updates (SQL none sel
 
 	curl -X POST -H "Content-Type: application/json" http://localhost:8080/sql/test -d"{\"SQL\":\"insert into info \(name\) values \('info text'\)\"}"
 
+The default style for the return JSON will be compact, if you want pretty print JSON returned, use the query parameter "json=pretty" e.g.
+
+  curl -X GET -H "Content-Type: application/json" "http://localhost:8080/sql/test/20?json=pretty" -d'{"SQL":"select * from info"}'
+
 There will be a full noSQL RESTful Relational Mapping (RRM) API, which I have yet to finalise, but it will be something like ActiveResources API.
 
 ## What is the current state of Camomile
@@ -65,4 +69,4 @@ There will be a full noSQL RESTful Relational Mapping (RRM) API, which I have ye
 * Camomile is in early alpha stage. It has the RESTful SQL interface completed, but needs full testing and tweaking, especially the database types to JSON conversions.
 * It comes in one directory, but this is just essentially a Jetty install, with a wrapper.
 * There is no RRM yet, I still have to work out what the API for this is going to look like.
-* There is no auto compile at the moment, this is all manual until I work out how to use ANT/Mavern to do it. I have compiled the code in the repository already, so you only have to download Camomile and run it, no compiling needed if you just want to use it.
+* There is no auto compile at the moment, this is all manual until I work out how to use ANT/Mavern to do it. I have compiled the code in the repository already, so you only have to download Camomile and run it, no compiling needed if you just want to use it. If you are on a Unix style system e.g. Mac OSX or Linux, then you can use the compile-cammomile script, to compile camomile.

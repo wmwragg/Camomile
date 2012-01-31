@@ -6,10 +6,8 @@
 #
 
 # Make sure the base is the full path 
-BASE=./camomile
-
-SERVER_HOME=$BASE/server
-WEBAPP=$SERVER_HOME/webapps/camomile
+BASE=camomile
+SRC=$BASE/src
 
 echo "Creating CLASSPATH..."
 
@@ -22,51 +20,24 @@ do
   CLASSPATH="$CLASSPATH":"$i"
 done
 
-# Server
-for i in "$SERVER_HOME"/lib/*.jar
+# jars
+for i in "$SRC"/lib/*.jar
 do
   CLASSPATH="$CLASSPATH":"$i"
 done
-for i in "$SERVER_HOME"/lib/annotations/*.jar
-do
-  CLASSPATH="$CLASSPATH":"$i"
-done
-#for i in "$SERVER_HOME"/lib/ext/*.jar
-#do
-#  CLASSPATH="$CLASSPATH":"$i"
-#done
-for i in "$SERVER_HOME"/lib/jndi/*.jar
-do
-  CLASSPATH="$CLASSPATH":"$i"
-done
-for i in "$SERVER_HOME"/lib/jsp/*.jar
-do
-  CLASSPATH="$CLASSPATH":"$i"
-done
-for i in "$SERVER_HOME"/lib/jta/*.jar
-do
-  CLASSPATH="$CLASSPATH":"$i"
-done
-
-# Webapp
-for i in "$WEBAPP"/WEB-INF/lib/*.jar
-do
-  CLASSPATH="$CLASSPATH":"$i"
-done
-CLASSPATH="$CLASSPATH":"$WEBAPP"/WEB-INF/classes
 
 # These are the additions to the CLASSPATH required to compile the packages.
-CLASSPATH="$CLASSPATH":"$WEBAPP"/WEB-INF/classes/app/camomile/rest
-CLASSPATH="$CLASSPATH":"$WEBAPP"/WEB-INF/classes/app/camomile/rest/exceptions
-CLASSPATH="$CLASSPATH":"$WEBAPP"/WEB-INF/classes/app/camomile/db
+CLASSPATH="$CLASSPATH":"$SRC"/classes
+CLASSPATH="$CLASSPATH":"$SRC"/classes/org
 
 export CLASSPATH
 
 echo "CLASSPATH created."
 
 # Do the compile
-echo "Compiling Camomile..."
+echo "Compiling Comomile..."
 
-find $WEBAPP/WEB-INF/classes -name "*.java" | xargs javac
+#find $SRC/classes -name "*.java" | xargs javac
+find $SRC/classes -name "*.java" | grep -v "$SRC/classes/org/camomile/[dr]" | xargs javac
 
 echo "Camomile compiled."

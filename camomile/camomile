@@ -1,32 +1,40 @@
-#!/bin/bash
-# #############################################################################
-#
-# Start the Camomile server
-#
 # Use like:
 #
-# camomile [port]
+# ./camomile
 #
-# E.g.
+# and this will run camomile.
 #
-# camomile
-# camomile 8181
-#
-# #############################################################################
 
-OS=""
-case "`uname`" in
-Darwin*) OS="OSX";;
-Linux*) OS="LINUX";;
-esac
+# Make sure the base is the full path 
+BASE=.
+SRC=$BASE/src
 
-cd bin
-if [ "$OS" == "OSX" ]
-then
-  awk -v PORT=$1 -f json.awk -f camomile.awk
-elif [ "$OS" == "LINUX" ]
-then
-  LC_ALL=C gawk -v PORT=$1 -f json.awk -f camomile.awk
-else
-  LC_ALL=C gawk -v PORT=$1 -f json.awk -f camomile.awk
-fi
+echo "Creating CLASSPATH..."
+
+CLASSPATH=.
+
+# Add on extra jar files to CLASSPATH
+# External
+for i in "$BASE"/connectors/*.jar
+do
+  CLASSPATH="$CLASSPATH":"$i"
+done
+
+# Server
+for i in "$SRC"/lib/*.jar
+do
+  CLASSPATH="$CLASSPATH":"$i"
+done
+
+# These are the additions to the CLASSPATH required to compile the packages.
+CLASSPATH="$CLASSPATH":"$SRC"/classes
+CLASSPATH="$CLASSPATH":"$SRC"/classes/org
+
+export CLASSPATH
+
+echo "CLASSPATH created."
+
+# Do the run
+echo "Run Camomile..."
+
+java CamomileServer

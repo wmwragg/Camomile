@@ -19,8 +19,9 @@ The idea is to have a simple directory which you just copy to your hard drive, n
 		camomile
 		camomile.bat
 		connections.json
+      server.json
 		connectors/
-		server/
+		src/
 
 You put the JDBC jars in the connectors/ directory, and add the connection configuration to the connections.json file using JSON syntax:
 
@@ -48,34 +49,40 @@ e.g. for MySQL test database
 
 Then just start up Camomile using the script:
 
-	camomile 8080
+	camomile
 
-This will start camomile on port 8080. You can then access the database via the RESTful camomile interface e.g. via curl bring back the top 20 rows from the info table:
+This will start camomile on port 8080 if the server.json file has the following in it:
 
-    curl -X GET -H "Content-Type: application/json" http://localhost:8080/sql/test/20 -d'{"SQL":"select * from info"}'
+    {
+        "http port" : "8080"
+    }
+
+You can then access the database via the RESTful camomile interface e.g. via curl bring back the top 20 rows from the info table:
+
+    curl -X GET -H "Content-Type: application/json" http://localhost:8080/test/sql/20 -d'{"SQL":"select * from info"}'
 
 Queries (SQL select statements) are done through GET while updates (SQL none select statements) are done through POST:
 
-    curl -X POST -H "Content-Type: application/json" http://localhost:8080/sql/test -d"{\"SQL\":\"insert into info \(name\) values \('info text'\)\"}"
+    curl -X POST -H "Content-Type: application/json" http://localhost:8080/test/sql -d"{\"SQL\":\"insert into info \(name\) values \('info text'\)\"}"
 
 The default style for the return JSON will be compact, if you want pretty print JSON returned, use the query parameter "json=pretty" e.g.
 
-    curl -X GET -H "Content-Type: application/json" "http://localhost:8080/sql/test/20?json=pretty" -d'{"SQL":"select * from info"}'
+    curl -X GET -H "Content-Type: application/json" "http://localhost:8080/test/sql/20?json=pretty" -d'{"SQL":"select * from info"}'
 
-There will be a full noSQL RESTful Relational Mapping (RRM) API, which I have yet to finalise, but it will be something like ActiveResources API.
+There will be a full RESTful API, which I have yet to finalise.
 
 ## What is the current state of Camomile
 
 * Camomile is in early alpha stage. It has the RESTful SQL interface completed, but needs full testing and tweaking, especially the database types to JSON conversions.
-* It comes in one directory, but this is just essentially a Jetty install, with a wrapper.
-* There is no RRM yet, I still have to work out what the API for this is going to look like.
+* It comes in one directory, but this is just essentially a Restlet install, with a wrapper.
+* There is no RESTful API yet, I still have to work out what the API for this is going to look like.
 * There is no auto compile at the moment, this is all manual until I work out how to use ANT/Mavern to do it. I have compiled the code in the repository already, so you only have to download Camomile and run it, no compiling needed if you just want to use it. If you are on a Unix style system e.g. Mac OSX or Linux, then you can use the compile-cammomile script, to compile camomile.
 
 ## Thanks to projects
 
 I use the following projects in Camomile, and I just want to thank them for all their hard work in making my life simpler and easier:
 
+* Restlet http://www.restlet.org/
 * Jetty http://jetty.codehaus.org/jetty/
-* Apache Wink http://incubator.apache.org/wink/
-* AWK http://www.cs.bell-labs.com/cm/cs/awkbook/index.html
-* JSON for Awk http://sourceforge.net/projects/jsonforawk/
+* Apache Commons http://commons.apache.org/
+* JSON for Java http://www.json.org/java/index.html

@@ -19,7 +19,7 @@ The idea is to have a simple directory which you just copy to your hard drive, n
 		camomile
 		camomile.bat
 		connections.json
-      server.json
+    	server.json
 		connectors/
 		src/
 

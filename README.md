@@ -76,7 +76,7 @@ There will be a full RESTful API, which I have yet to finalise.
 * Camomile is in early alpha stage. It has the RESTful SQL interface completed, but needs full testing and tweaking, especially the database types to JSON conversions.
 * It comes in one directory, but this is just essentially a Restlet install, with a wrapper.
 * There is no RESTful API yet, I still have to work out what the API for this is going to look like.
-* There is no auto compile at the moment, this is all manual until I work out how to use ANT/Mavern to do it. I have compiled the code in the repository already, so you only have to download Camomile and run it, no compiling needed if you just want to use it. If you are on a Unix style system e.g. Mac OSX or Linux, then you can use the compile-cammomile script, to compile camomile.
+* There is no auto compile at the moment, this is all manual until I work out how to use ANT/Mavern to do it. I have compiled the code in the repository already, so you only have to download Camomile and run it, no compiling needed if you just want to use it. If you are on a Unix style system e.g. Mac OSX or Linux, then you can use the compile-camomile script, to compile camomile. If you are on a Windows system then just use the compile-camomile.bat script to do the compile. 
 
 ## Thanks to projects
 

@@ -34,10 +34,13 @@ export CLASSPATH
 
 echo "CLASSPATH created."
 
+echo
+echo "$CLASSPATH"
+echo
+
 # Do the compile
 echo "Compiling Comomile..."
 
-#find $SRC/classes -name "*.java" | xargs javac
-find $SRC/classes -name "*.java" | grep -v "$SRC/classes/org/camomile/[dr]" | xargs javac
+find $SRC/classes -name "*.java" | xargs javac
 
 echo "Camomile compiled."

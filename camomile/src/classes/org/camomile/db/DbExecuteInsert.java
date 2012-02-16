@@ -9,13 +9,14 @@ import java.util.*;
 import org.camomile.exceptions.*;
 
 // Immutable query class
-public final class DbExecuteUpdate {
+public final class DbExecuteInsert {
   private final JSONObject jobj = new JSONObject();
  
-  public DbExecuteUpdate(String connection, String update) {
+  public DbExecuteInsert(String connection, String update) {
     String error;
     Connection con = null;
     Statement stmt = null;
+    ResultSet rs = null;
 
     // Get connection
     try {
@@ -31,8 +32,32 @@ public final class DbExecuteUpdate {
     // Process update
     try{
       stmt = con.createStatement();
-      int count = stmt.executeUpdate(update);
+      int count = stmt.executeUpdate(update, Statement.RETURN_GENERATED_KEYS);
+      rs = stmt.getGeneratedKeys();
 
+      if (rs != null) {
+        // Create the return JSON
+        if (rs.next()) {
+          ResultSetMetaData rsmd = rs.getMetaData();
+          int fieldCount = rsmd.getColumnCount();
+          ArrayList<Object> listRecord = new ArrayList<Object>();
+          for (int num = 1; num <= fieldCount; num++) {
+            // Get the right java types for the database types
+            // Note: More need to be added
+            int type = rsmd.getColumnType(num);
+            if (type == Types.TINYINT || type == Types.SMALLINT || type == Types.INTEGER) {
+              listRecord.add(rs.getInt(num));
+            } else if (type == Types.BIGINT) {
+              listRecord.add(rs.getLong(num));
+            } else if (type == Types.BOOLEAN || type == Types.BIT) {
+              listRecord.add(rs.getBoolean(num));
+            } else {
+              listRecord.add(rs.getString(num));
+            }
+          }
+          jobj.put("keys", listRecord);
+        }
+      }
       jobj.put("count", count);
 
     } catch(SQLException e){
@@ -44,6 +69,9 @@ public final class DbExecuteUpdate {
     } finally {
       // Close resources
       try {
+        if ( rs != null ) {
+          rs.close();
+        }
         if ( stmt != null ) {
           stmt.close();
         }

@@ -20,36 +20,46 @@ public class CamomileSqlResource {
   @GET
   @Path("/sql")
   public String getAllMessage(JSONObject jsonSql) {
-    return doAction(jsonSql, 0, true);
+    return doAction(jsonSql, 0, "select");
   }
 
   @GET
   @Path("/sql/{limit}")
   public String getLimitMessage(JSONObject jsonSql, @PathParam("limit") int limit) {
-    return doAction(jsonSql, limit, true);
+    return doAction(jsonSql, limit, "select");
   }
 
   @POST
   @Path("/sql")
   public String postMessage(JSONObject jsonSql) {
-    return doAction(jsonSql, 0, false);
+    return doAction(jsonSql, 0, "update");
   }
 
-  private String doAction(JSONObject jsonSql, int limit, boolean select) {
+  @PUT
+  @Path("/sql")
+  public String putMessage(JSONObject jsonSql) {
+    return doAction(jsonSql, 0, "insert");
+  }
+
+  private String doAction(JSONObject jsonSql, int limit, String type) {
     String error;
     JSONObject jobj = null;
     String allowSQL = appContext.getFirstValue(connection + ":allow sql");
 
     if (allowSQL != null && allowSQL.equals("true")) {
       try {
-        if (select) {
+        if (type.equals("select")) {
           DbExecuteQuery dbQ = new DbExecuteQuery(connection, jsonSql.getString("SQL"), limit);
           jobj = dbQ.getResult();
           //jobj = new JSONObject("{\"" + connection + "\" : \"" + jsonSql.getString("SQL")  + "\"}");
-        } else {
+        } else if (type.equals("update")) {
           DbExecuteUpdate dbU = new DbExecuteUpdate(connection, jsonSql.getString("SQL"));
           jobj = dbU.getResult();
           //jobj = new JSONObject("{\"" + connection + "\" : \"UPDATE: " + jsonSql.getString("SQL")  + "\"}");
+        } else if (type.equals("insert")) {
+          DbExecuteInsert dbI = new DbExecuteInsert(connection, jsonSql.getString("SQL"));
+          jobj = dbI.getResult();
+          //jobj = new JSONObject("{\"" + connection + "\" : \"INSERT: " + jsonSql.getString("SQL")  + "\"}");
         }
       } catch(CamomileInternalServerErrorException e) {
         throw e;

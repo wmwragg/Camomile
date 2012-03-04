@@ -29,8 +29,8 @@ public final class DbExecuteInsert {
       throw new CamomileInternalServerErrorException(error);
     }
 
-    // Process update
-    try{
+    // Process insert
+    try {
       stmt = con.createStatement();
       int count = stmt.executeUpdate(update, Statement.RETURN_GENERATED_KEYS);
       rs = stmt.getGeneratedKeys();

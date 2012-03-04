@@ -29,7 +29,7 @@ public class CamomileSqlResource {
     return doAction(jsonSql, limit, "select");
   }
 
-  @POST
+  @POST @DELETE
   @Path("/sql")
   public String postMessage(JSONObject jsonSql) {
     return doAction(jsonSql, 0, "update");

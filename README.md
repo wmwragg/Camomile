@@ -63,7 +63,7 @@ You can then access the database via the RESTful camomile interface e.g. via cur
 
 Queries (SQL select statements) are done through GET while updates and deletes are done through POST and inserts are done through PUT:
 
-    curl -X PUT -H "Content-Type: application/json" http://localhost:8080/test/sql -d"{\"SQL\":\"insert into info \(name\) values \('info text'\)\"}"
+    curl -X PUT -H "Content-Type: application/json" http://localhost:8080/test/sql -d"{\"SQL\":\"insert into info (name) values ('info text')\"}"
 
 The default style for the return JSON will be compact, if you want pretty print JSON returned, use the query parameter "json=pretty" e.g.
 

@@ -82,7 +82,7 @@ There will be a full RESTful API, which I have yet to finalise.
 
 I use the following projects in Camomile, and I just want to thank them for all their hard work in making my life simpler and easier:
 
-* Restlet http://www.restlet.org/
+* Restlet https://restlet.com
 * Jetty http://jetty.codehaus.org/jetty/
 * Apache Commons http://commons.apache.org/
 * JSON for Java http://www.json.org/java/index.html
